@@ -1,0 +1,5 @@
+install: yes
+logging.level: error
+logging.to_files: true
+logging.to_syslog: false
+logging_path: /var/log/metricbeat

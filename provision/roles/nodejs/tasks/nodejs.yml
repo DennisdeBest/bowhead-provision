@@ -1,0 +1,20 @@
+---
+
+- include: install.deb.yml
+  become: yes
+  when: ansible_pkg_mgr == 'apt' and nodejs_install == 'pkg'
+
+- include: install.yum.yml
+  become: yes
+  when: ansible_pkg_mgr == 'yum' and nodejs_install == 'pkg'
+
+- include: install.src.yml
+  become: yes
+  when: nodejs_install == 'src'
+
+- name: Install NPM modules
+  become: yes
+  npm: name={{item}} global=yes
+  with_items: "{{nodejs_npm_modules}}"
+
+...

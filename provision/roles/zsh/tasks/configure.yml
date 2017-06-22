@@ -1,0 +1,13 @@
+---
+
+- name: configure .zshrc
+  template:
+    src: "../templates/antigen_zshrc.j2"
+    dest: "~/.zshrc"
+  when: antigen
+
+# - name: change default shell to zsh
+#   command: chsh -s "$(which zsh)"
+#   when: change_shell
+
+...

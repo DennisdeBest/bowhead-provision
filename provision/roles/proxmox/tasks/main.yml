@@ -1,0 +1,27 @@
+---
+
+# - name: "Disabled /etc/apt/sources.list.d/pve-enterprise.list"
+#   become: yes
+#   lineinfile:
+#     dest: /etc/apt/sources.list.d/pve-enterprise.list
+#     regexp: '^deb https://enterprise.proxmox.com/debian jessie pve-enterprise$'
+#     state: present
+#     line: '#deb https://enterprise.proxmox.com/debian jessie pve-enterprise'
+
+# # - include: install_debian.yml
+# #   when: ansible_distribution == "Debian"
+
+- include: network.yml
+  when: network
+  
+- name: Install pip
+  apt: name="python-pip" state="present"
+  become: yes
+
+- name: "Install proxmoxer"
+  become: yes
+  pip: name="proxmoxer"
+
+- include: vm.yml
+
+...

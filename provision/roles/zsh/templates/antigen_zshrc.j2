@@ -1,0 +1,18 @@
+source {{ antigen_directory }}/antigen.zsh
+
+export TERM="xterm-256color"
+
+PROMPT_GEOMETRY_COLORIZE_ROOT=true
+PROMPT_GEOMETRY_EXEC_TIME=true
+GEOMETRY_PROMPT_PREFIX="%{$fg[red]%}%n%{$fg[green]%}@%m$reset_color"
+GEOMETRY_SYMBOL_PROMPT="ツ"
+GEOMETRY_SYMBOL_ROOT="ϟ"
+GEOMETRY_SYMBOL_EXIT_VALUE="☭"
+
+{% for bundle in antigen_bundle %}
+antigen bundle {{ bundle }}
+{% endfor %}
+
+antigen theme {{ antigen_theme }}
+
+antigen apply

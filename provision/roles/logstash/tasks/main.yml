@@ -1,0 +1,15 @@
+---
+
+- name: 'Install for debian'
+  include: install_debian.yml
+  become: yes
+  become_method: su
+  when: install and (ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu')
+
+- name: 'Configuring logstash for direct indexing'
+  include: configuring.yml
+  become: yes
+  become_method: su
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+...

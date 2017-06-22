@@ -1,0 +1,4 @@
+grafana_plugins:
+   - grafana-worldmap-panel
+   - grafana-piechart-panel
+   - grafana-clock-panel

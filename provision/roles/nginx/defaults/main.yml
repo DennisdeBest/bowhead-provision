@@ -1,0 +1,36 @@
+nginx_secret_token: 'off'
+nginx_headers:
+    - 'X-Frame-Options SAMEORIGIN'
+nginx_log_dir: "/var/log/nginx/"
+nginx_access_log: "access.log"
+nginx_error_log: "error.log"
+nginx_separe_log: True
+# Install passenger for python/ruby/nodejs sites
+nginx_passenger: yes
+nginx_packages:
+    - nginx-full
+
+nginx_sites:
+    - name: example.drupal.dev
+      domain: example.drupal.dev
+      root: /var/www/example
+      fpm: 5
+      type: drupal
+      https: yes
+    - name: example.symfony.dev
+      domain: example.symfony.dev
+      root: /var/www/example
+      fpm: 5
+      type: symfony
+      https: yes
+      dev: no
+    - name: example.node.dev
+      domain: example.node.dev
+      root: /var/www/example/public
+      type: node
+      https: yes
+    - name: example.site.dev
+      domain: example.site.dev
+      root: /var/www/example
+      type: site
+      https: no

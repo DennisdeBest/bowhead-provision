@@ -1,0 +1,19 @@
+---
+
+- name: Bowhead
+  hosts: dev
+  remote_user: vagrant
+  vars:
+    apache_vhosts:
+      # Additional properties: 'serveradmin, serveralias, extra_parameters'.
+      - servername: "bowhead.local"
+        documentroot: "/var/www/local.bowhead"
+
+  roles:
+    - { role: apache2, sudo: yes}
+    - mysql
+    - php7
+    - common
+    - redis
+    - bowhead
+...

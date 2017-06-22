@@ -1,0 +1,82 @@
+---
+
+- name: Install requirement for redmine
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - mysql-client
+    - libmysqlclient-dev
+    - gcc
+    - build-essential
+    - zlib1g
+    - zlib1g-dev
+    - zlibc
+    - ruby-zip
+    - libssl-dev
+    - libyaml-dev
+    - libcurl4-openssl-dev
+    - ruby
+    - gem
+    - libapache2-mod-passenger
+    - apache2-mpm-prefork
+    - apache2-dev
+    - libapr1-dev
+    - libxslt1-dev
+    - checkinstall
+    - libxml2-dev
+    - ruby-dev
+    - vim
+    - libmagickwand-dev
+    - imagemagick
+
+- name: create redmine user
+  user:
+    name: "{{ redmine_user }}"
+
+- name: create install directory
+  file:
+    state: directory
+    path: "{{ redmine_directory }}"
+    owner: "{{ redmine_user }}"
+    group: "{{ redmine_user }}"
+
+- name: change redmine directory owner
+  file:
+    state: directory
+    path: "{{ redmine_directory }}"
+
+- name: Extract redmine archive
+  unarchive:
+    src: "http://www.redmine.org/releases/redmine-{{ redmine_version }}.tar.gz"
+    dest: "{{ redmine_directory }}"
+    remote_src: True
+
+# - name: Create database.yml from database.yml.example
+#   command: cp /opt/redmine/redmine-3.3.2/config/database.yml.example /opt/redmine/redmine-3.3.2/config/database.yml
+
+- name: Customize config/database.yml
+  blockinfile:
+    dest: "{{ redmine_directory }}redmine-{{ redmine_version }}/config/database.yml"
+    create: yes
+    content: "{{ redmine_config_database }}"
+
+- name: Install bundler
+  gem:
+    name: bundler
+    state: latest
+
+- name: Execution bundler
+  bundler:
+    gemfile: "{{ redmine_directory }}redmine-{{ redmine_version }}/Gemfile"
+    extra_args: --without development test
+    exclude_groups: development test
+
+- name: Execute db-migrate
+  shell: "cd {{ redmine_directory }}redmine-{{ redmine_version }}/ && RAILS_ENV=production bundle exec rake db:migrate"
+
+- name: Execute load default data
+  shell: "cd {{ redmine_directory }}redmine-{{ redmine_version }}/ && RAILS_ENV=production bundle exec rake redmine:load_default_data"
+
+...

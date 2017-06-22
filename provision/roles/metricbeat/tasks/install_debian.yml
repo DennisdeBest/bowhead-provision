@@ -1,0 +1,31 @@
+---
+
+- name: "Install requirements"
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - apt-transport-https
+    - openssl
+    - ca-certificates
+
+- name: Get gpg key for elastic.co repositories
+  apt_key:
+    url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+    state: present
+
+- name: Add elastic.co repositories
+  apt_repository:
+    repo: "deb https://artifacts.elastic.co/packages/5.x/apt stable main"
+    state: present
+
+- name: Run the equivalent of "apt-get update" as a separate step
+  apt:
+    update_cache: yes
+
+- name: "Install metricbeat"
+  apt:
+    name: "metricbeat"
+    state: latest
+
+...

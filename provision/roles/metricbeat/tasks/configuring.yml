@@ -1,0 +1,12 @@
+---
+
+- name: metricbeat configuration file
+  template:
+    src: "../templates/metricbeat.yml.j2"
+    dest: "/etc/metricbeat/metricbeat.yml"
+
+- name: metricbeat restart
+  service:
+    name: "metricbeat"
+    state: restarted
+...

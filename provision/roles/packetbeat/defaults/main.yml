@@ -1,0 +1,7 @@
+elasticsearch_output:
+  - 51.255.99.182:9200
+install: yes
+logging_level: error
+logging_to_files: true
+logging_to_syslog: false
+logging_path: /var/log/metricbeat

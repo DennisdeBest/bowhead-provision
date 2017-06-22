@@ -1,0 +1,5 @@
+mysql_root_password: toor
+mysql_databases:
+  - name: example
+    user: example
+    password: test

@@ -1,0 +1,47 @@
+---
+
+- name: "Install requirements"
+  become: yes
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - apt-transport-https
+    - openssl
+    - ca-certificates
+    - curl
+
+
+
+- name: Get gpg key for grafana
+  become: yes
+  apt_key:
+    url: "https://packagecloud.io/gpg.key"
+
+- name: Add grafana repository
+  become: yes
+  apt_repository:
+    repo: "deb https://packagecloud.io/grafana/testing/debian/ jessie main"
+    state: present
+
+- name: Run the equivalent of "apt-get update" as a separate step
+  apt:
+    update_cache: yes
+
+- name: "Install grafana"
+  become: yes
+  apt:
+    name: "grafana"
+    state: latest
+- name: "install plugins"
+  become: yes
+  command: "grafana-cli plugins install {{ item }}"
+  with_items: "{{ grafana_plugins }}"
+
+- name: "Launch  grafana server"
+  become: yes
+  service:
+    name: "grafana-server"
+    state: restarted
+...

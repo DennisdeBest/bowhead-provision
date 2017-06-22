@@ -1,0 +1,63 @@
+---
+
+#- name: Create kvm nodes
+#  shell: "qm create {{ item.vmid }} --name {{ item.vmid }} --keyboard fr --ostype l26 --format=qcow2 --memory {{ item.memory }} --onboot {{ item.onboot }} --sockets {{ item.cpus }} --acpi yes --kvm yes"
+#  with_items: "{{ kvm_nodes }}"
+
+# - proxmox_template:
+#     node: "{{ node }}"
+#     api_user: "{{ api_user }}"
+#     api_password: "{{ api_password }}"
+#     api_host: "{{ hostname }}"
+#     storage: "local"
+#     content_type: "vztmpl"
+#     src: "~/debian-8.0-standard_8.6-1_amd64.tar.gz"
+#     state: present
+
+- name: "Create container nodes"
+  proxmox:
+    vmid: "{{ item.vmid }}"
+    node: "{{ node }}"
+    api_user: "{{ api_user }}"
+    api_password: "{{ api_password }}"
+    api_host: "{{ api_host }}"
+    cpus: "{{ item.cpus }}"
+    cpuunits: "{{ item.cpuunits }}"
+    disk: "{{ item.disk }}"
+    hostname: "{{ item.hostname }}"
+    memory: "{{ item.memory }}"
+    netif: "{{ item.netif }}"
+    onboot: "{{ item.onboot }}"
+    ostemplate: "{{ item.ostemplate }}"
+    password: "{{ item.password }}"
+    swap: "{{ item.swap }}"
+    state: "{{ item.state }}"
+  with_items: "{{ container_nodes }}"
+
+- name: "Start all containers"
+  proxmox:
+    vmid: "{{ item.vmid }}"
+    api_user: "{{ api_user }}"
+    api_password: "{{ api_password }}"
+    api_host: "{{ api_host }}"
+    state: started
+  with_items: "{{ container_nodes }}"
+
+- name: "Change sshd config"
+  command: lxc-attach -n {{item.vmid}} -- bash -c "sed 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config > /tmp/sshd_config && mv /tmp/sshd_config /etc/ssh/sshd_config"
+  with_items: "{{ container_nodes }}"
+
+- name: "Restart sshd"
+  command: lxc-attach -n {{item.vmid}} -- bash -c "service ssh restart"
+  with_items: "{{ container_nodes }}"
+
+- name: "Install ssh keys in authorizedkey"
+  command: lxc-attach -n {{ item.vmid }} -- bash -c "mkdir -p ~/.ssh && touch ~/.ssh/authorized_keys && if ! grep -xq \"{{ item.ssh_key }}\" ~/.ssh/authorized_keys; then echo \"{{ item.ssh_key }}\" > ~/.ssh/authorized_keys;fi"
+  with_items: "{{ container_nodes }}"
+
+- name: "update host param fot vm"
+  become: yes
+  command: "sysctl -w vm.max_map_count=262144"
+
+
+...

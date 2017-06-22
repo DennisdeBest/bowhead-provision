@@ -1,0 +1,14 @@
+ide2: local:iso/mini.iso,media=cdrom,size=28M
+name: {{ item.name }}
+net0: e1000=auto
+net1: e1000=auto, bridge=vmbr0
+onboot: 0
+ostype: l26
+scsi0: local:100/vm-{{ item.vmid }}-disk-1.qcow2,size={{ item.disk }}G
+smbios1: uuid=b0ccce10-12a6-45e3-aaf3-0480f15db33c
+sockets: 1
+acpi: 1
+autostart: 0
+description:  {{ item.description }}
+keyboard: fr
+memory: {{ item.memory }}

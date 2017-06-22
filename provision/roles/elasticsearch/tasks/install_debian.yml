@@ -1,0 +1,63 @@
+---
+
+- name: "Install requirements"
+  become: yes
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - apt-transport-https
+    - openssl
+    - ca-certificates
+    - curl
+
+- name: Get gpg key for oracle-java8-installer
+  become: yes
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: EEA14886
+    state: present
+
+- name: Add oracle-java8-installer repository
+  become: yes
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+  with_items:
+    - deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main
+    - deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main
+
+- name: Run the equivalent of "apt-get update" as a separate step
+  apt:
+    update_cache: yes
+
+- name: "Install oracle-java8-installer"
+  become: yes
+  apt:
+    name: "oracle-java8-installer"
+    state: present
+
+- name: Get gpg key for elastic.co repositories
+  become: yes
+  apt_key:
+    url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+    state: present
+
+- name: Add elastic.co repositories
+  become: yes
+  apt_repository:
+    repo: "deb https://artifacts.elastic.co/packages/5.x/apt stable main"
+    state: present
+
+- name: Run the equivalent of "apt-get update" as a separate step
+  apt:
+    update_cache: yes
+
+- name: "Install elasticsearch"
+  become: yes
+  apt:
+    name: "elasticsearch"
+    state: latest
+
+
+...

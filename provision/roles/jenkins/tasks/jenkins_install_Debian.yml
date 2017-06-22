@@ -1,0 +1,29 @@
+---
+
+- name: "Install requirements"
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - apt-transport-https
+    - openssl
+    - ca-certificates
+
+- name: Get gpg key for jenkins.io repositories
+  apt_key:
+    url: "https://pkg.jenkins.io/debian/jenkins.io.key"
+    state: present
+
+- name: Add jenkins.io repositories
+  apt_repository:
+    repo: "deb http://pkg.jenkins.io/debian-stable binary/"
+    state: present
+    filename: 'jenkins'
+
+- name: Install jenkins
+  apt:
+    name: "jenkins"
+    state: latest
+    update_cache: yes
+
+...

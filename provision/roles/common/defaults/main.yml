@@ -1,0 +1,11 @@
+packages:
+  - vim
+  - curl
+  - wget
+  - htop
+  - screen
+  - ccze
+  - git
+composer: yes
+composer_path: /usr/bin/composer
+composer_keep_updated: true

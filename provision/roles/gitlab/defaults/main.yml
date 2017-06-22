@@ -1,0 +1,13 @@
+embed_nginx: 'true'
+web_server_user: www-data
+gitlab_domain: git.avril.co
+gitlab_external_url: "http://{{ gitlab_domain }}"
+gitlab_email_from: gitlab@git.avril.co
+gitlab_email_reply_to: noreply@git.avril.co
+gitlab_public_dir: /opt/gitlab/embedded/service/gitlab-rails/public
+gitlab_db_adapter: mysql
+gitlab_db_name: gitlab
+gitlab_db_username: gitlab
+gitlab_db_password: hello@vril
+gitlab_db_host: 192.168.0.105
+gitlab_db_port: 3306

@@ -1,0 +1,15 @@
+---
+
+- name: install zsh
+  apt:
+    name: zsh
+    state: latest
+    update_cache: yes
+
+- name: Install antigen
+  include: antigen.yml
+
+- name: Configuring antigen
+  include: configure.yml
+
+...

@@ -1,0 +1,140 @@
+restart: no
+network: no
+node: 'chaos'
+hostname: 'chaos.avril.co'
+hosts: 'chaos.avril.co chaos'
+default_hosts: 'ns394696.ip-176-31-107.eu ns394696'
+api_user: root@pam
+api_password: root
+api_host: chaos.avril.co
+bridge: vmbr0
+kvm_nodes:
+  - name: monit
+    vmid: 120
+    hostname: "monit.avril.co"
+    ostemplate: 'local:vztmpl/debian-8.0-standard_8.6-1_amd64.tar.gz'
+    cpus: 4
+    cpuunits: 1000
+    disk: 500
+    memory: 1024
+    netif: '{"net0":"name=eth0,ip=192.168.0.101/24,gw=192.168.0.254,bridge=vmbr1","net1":"name=eth1,firewall=1,ip=dhcp,ip6=dhcp,bridge=vmbr0"}'
+    swap: 1024
+    password: hello@vril
+    state: present
+    onboot: yes
+    ip: 192.168.0.1
+    ssh_port: 2228
+    ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDl/hK+BfxhIV2dQ/7sT0PNYE7ZgZmifnYZ9VWzZWsbINHQJwm1TZHXUJWcs2DVC5yuErP+b9pEKodm8gV8ohQcAw7ampET18eyknNVJ/oB+CKsUCDAb3UW09Vr2Cai8w9OZ3Bevbi8ndEXjJvCon/52drGGwN9GKaAtY8Z+xbDRit2H5/rcFacAld/NsGk1+PHSC5ZA8C8/gRDL5yLqaqfCIOKZP3qVDvu/zBSUcrITYrATn0/yE+h6RDPPeFjAG+pSNOCznLSVa7isdxbWua9IdM2RnsFLP8bSInr22VDyPS5g/Or/V/A9Rh518OlS1jGjIe0N3Mp9EBjQd1ENab3 thomas@avril.co"
+container_nodes:
+  - name: chronos
+    vmid: 100
+    hostname: "chronos.avril.co"
+    ostemplate: 'local:vztmpl/debian-8.0-standard_8.6-1_amd64.tar.gz'
+    cpus: 1
+    cpuunits: 1000
+    disk: 50
+    memory: 1024
+    netif: '{"net0":"name=eth0,ip=192.168.0.100/24,gw=192.168.0.254,bridge=vmbr1","net1":"name=eth1,firewall=1,ip=dhcp,ip6=dhcp,bridge=vmbr0"}'
+    swap: 1024
+    password: hello@vril
+    state: present
+    onboot: yes
+    ip: 192.168.0.100
+    ssh_port: 2222
+    ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDl/hK+BfxhIV2dQ/7sT0PNYE7ZgZmifnYZ9VWzZWsbINHQJwm1TZHXUJWcs2DVC5yuErP+b9pEKodm8gV8ohQcAw7ampET18eyknNVJ/oB+CKsUCDAb3UW09Vr2Cai8w9OZ3Bevbi8ndEXjJvCon/52drGGwN9GKaAtY8Z+xbDRit2H5/rcFacAld/NsGk1+PHSC5ZA8C8/gRDL5yLqaqfCIOKZP3qVDvu/zBSUcrITYrATn0/yE+h6RDPPeFjAG+pSNOCznLSVa7isdxbWua9IdM2RnsFLP8bSInr22VDyPS5g/Or/V/A9Rh518OlS1jGjIe0N3Mp9EBjQd1ENab3 thomas@avril.co"
+  - name: thanatos
+    vmid: 101
+    hostname: "thanatos.avril.co"
+    ostemplate: 'local:vztmpl/debian-8.0-standard_8.6-1_amd64.tar.gz'
+    cpus: 4
+    cpuunits: 1000
+    disk: 50
+    memory: 1024
+    netif: '{"net0":"name=eth0,ip=192.168.0.101/24,gw=192.168.0.254,bridge=vmbr1","net1":"name=eth1,firewall=1,ip=dhcp,ip6=dhcp,bridge=vmbr0"}'
+    swap: 1024
+    password: hello@vril
+    state: present
+    onboot: yes
+    ip: 192.168.0.101
+    ssh_port: 2223
+    ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDl/hK+BfxhIV2dQ/7sT0PNYE7ZgZmifnYZ9VWzZWsbINHQJwm1TZHXUJWcs2DVC5yuErP+b9pEKodm8gV8ohQcAw7ampET18eyknNVJ/oB+CKsUCDAb3UW09Vr2Cai8w9OZ3Bevbi8ndEXjJvCon/52drGGwN9GKaAtY8Z+xbDRit2H5/rcFacAld/NsGk1+PHSC5ZA8C8/gRDL5yLqaqfCIOKZP3qVDvu/zBSUcrITYrATn0/yE+h6RDPPeFjAG+pSNOCznLSVa7isdxbWua9IdM2RnsFLP8bSInr22VDyPS5g/Or/V/A9Rh518OlS1jGjIe0N3Mp9EBjQd1ENab3 thomas@avril.co"
+  - name: pan
+    vmid: 102
+    hostname: "pan.avril.co"
+    ostemplate: 'local:vztmpl/debian-8.0-standard_8.6-1_amd64.tar.gz'
+    cpus: 1
+    cpuunits: 1000
+    disk: 50
+    memory: 1024
+    netif: '{"net0":"name=eth0,ip=192.168.0.102/24,gw=192.168.0.254,bridge=vmbr1","net1":"name=eth1,firewall=1,ip=dhcp,ip6=dhcp,bridge=vmbr0"}'
+    swap: 1024
+    password: hello@vril
+    state: present
+    onboot: yes
+    ip: 192.168.0.102
+    ssh_port: 2224
+    ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDl/hK+BfxhIV2dQ/7sT0PNYE7ZgZmifnYZ9VWzZWsbINHQJwm1TZHXUJWcs2DVC5yuErP+b9pEKodm8gV8ohQcAw7ampET18eyknNVJ/oB+CKsUCDAb3UW09Vr2Cai8w9OZ3Bevbi8ndEXjJvCon/52drGGwN9GKaAtY8Z+xbDRit2H5/rcFacAld/NsGk1+PHSC5ZA8C8/gRDL5yLqaqfCIOKZP3qVDvu/zBSUcrITYrATn0/yE+h6RDPPeFjAG+pSNOCznLSVa7isdxbWua9IdM2RnsFLP8bSInr22VDyPS5g/Or/V/A9Rh518OlS1jGjIe0N3Mp9EBjQd1ENab3 thomas@avril.co"
+  - name: ponos
+    vmid: 103
+    hostname: "ponos.avril.co"
+    ostemplate: 'local:vztmpl/debian-8.0-standard_8.6-1_amd64.tar.gz'
+    cpus: 2
+    cpuunits: 1000
+    disk: 500
+    memory: 1024
+    netif: '{"net0":"name=eth0,ip=192.168.0.103/24,gw=192.168.0.254,bridge=vmbr1","net1":"name=eth1,firewall=1,ip=dhcp,ip6=dhcp,bridge=vmbr0"}'
+    swap: 1024
+    password: hello@vril
+    state: present
+    onboot: yes
+    ip: 192.168.0.103
+    ssh_port: 2225
+    ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDl/hK+BfxhIV2dQ/7sT0PNYE7ZgZmifnYZ9VWzZWsbINHQJwm1TZHXUJWcs2DVC5yuErP+b9pEKodm8gV8ohQcAw7ampET18eyknNVJ/oB+CKsUCDAb3UW09Vr2Cai8w9OZ3Bevbi8ndEXjJvCon/52drGGwN9GKaAtY8Z+xbDRit2H5/rcFacAld/NsGk1+PHSC5ZA8C8/gRDL5yLqaqfCIOKZP3qVDvu/zBSUcrITYrATn0/yE+h6RDPPeFjAG+pSNOCznLSVa7isdxbWua9IdM2RnsFLP8bSInr22VDyPS5g/Or/V/A9Rh518OlS1jGjIe0N3Mp9EBjQd1ENab3 thomas@avril.co"
+  - name: nyx
+    vmid: 104
+    hostname: "nyx.avril.co"
+    ostemplate: 'local:vztmpl/debian-8.0-standard_8.6-1_amd64.tar.gz'
+    cpus: 1
+    cpuunits: 1000
+    disk: 50
+    memory: 1024
+    netif: '{"net0":"name=eth0,ip=192.168.0.104/24,gw=192.168.0.254,bridge=vmbr1","net1":"name=eth1,firewall=1,ip=dhcp,ip6=dhcp,bridge=vmbr0"}'
+    swap: 1024
+    password: hello@vril
+    state: present
+    onboot: yes
+    ip: 192.168.0.104
+    ssh_port: 2226
+    ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDl/hK+BfxhIV2dQ/7sT0PNYE7ZgZmifnYZ9VWzZWsbINHQJwm1TZHXUJWcs2DVC5yuErP+b9pEKodm8gV8ohQcAw7ampET18eyknNVJ/oB+CKsUCDAb3UW09Vr2Cai8w9OZ3Bevbi8ndEXjJvCon/52drGGwN9GKaAtY8Z+xbDRit2H5/rcFacAld/NsGk1+PHSC5ZA8C8/gRDL5yLqaqfCIOKZP3qVDvu/zBSUcrITYrATn0/yE+h6RDPPeFjAG+pSNOCznLSVa7isdxbWua9IdM2RnsFLP8bSInr22VDyPS5g/Or/V/A9Rh518OlS1jGjIe0N3Mp9EBjQd1ENab3 thomas@avril.co"
+  - name: helios
+    vmid: 105
+    hostname: "helios.avril.co"
+    ostemplate: 'local:vztmpl/debian-8.0-standard_8.6-1_amd64.tar.gz'
+    cpus: 1
+    cpuunits: 1000
+    disk: 500
+    memory: 1024
+    netif: '{"net0":"name=eth0,ip=192.168.0.105/24,gw=192.168.0.254,bridge=vmbr1","net1":"name=eth1,firewall=1,ip=dhcp,ip6=dhcp,bridge=vmbr0"}'
+    swap: 1024
+    password: hello@vril
+    state: present
+    onboot: yes
+    ip: 192.168.0.105
+    ssh_port: 2227
+    ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDl/hK+BfxhIV2dQ/7sT0PNYE7ZgZmifnYZ9VWzZWsbINHQJwm1TZHXUJWcs2DVC5yuErP+b9pEKodm8gV8ohQcAw7ampET18eyknNVJ/oB+CKsUCDAb3UW09Vr2Cai8w9OZ3Bevbi8ndEXjJvCon/52drGGwN9GKaAtY8Z+xbDRit2H5/rcFacAld/NsGk1+PHSC5ZA8C8/gRDL5yLqaqfCIOKZP3qVDvu/zBSUcrITYrATn0/yE+h6RDPPeFjAG+pSNOCznLSVa7isdxbWua9IdM2RnsFLP8bSInr22VDyPS5g/Or/V/A9Rh518OlS1jGjIe0N3Mp9EBjQd1ENab3 thomas@avril.co"
+  - name: monit
+    vmid: 106
+    hostname: "monit.avril.co"
+    ostemplate: 'local:vztmpl/debian-8.0-standard_8.6-1_amd64.tar.gz'
+    cpus: 4
+    cpuunits: 1000
+    disk: 500
+    memory: 4096
+    netif: '{"net0":"name=eth0,ip=192.168.0.106/24,gw=192.168.0.254,bridge=vmbr1","net1":"name=eth1,firewall=1,ip=dhcp,ip6=dhcp,bridge=vmbr0"}'
+    swap: 4096
+    password: hello@vril
+    state: present
+    onboot: yes
+    ip: 192.168.0.106
+    ssh_port: 2228
+    ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDl/hK+BfxhIV2dQ/7sT0PNYE7ZgZmifnYZ9VWzZWsbINHQJwm1TZHXUJWcs2DVC5yuErP+b9pEKodm8gV8ohQcAw7ampET18eyknNVJ/oB+CKsUCDAb3UW09Vr2Cai8w9OZ3Bevbi8ndEXjJvCon/52drGGwN9GKaAtY8Z+xbDRit2H5/rcFacAld/NsGk1+PHSC5ZA8C8/gRDL5yLqaqfCIOKZP3qVDvu/zBSUcrITYrATn0/yE+h6RDPPeFjAG+pSNOCznLSVa7isdxbWua9IdM2RnsFLP8bSInr22VDyPS5g/Or/V/A9Rh518OlS1jGjIe0N3Mp9EBjQd1ENab3 thomas@avril.co"

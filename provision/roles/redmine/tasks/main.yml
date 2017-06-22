@@ -1,0 +1,7 @@
+---
+
+- name: Install on {{ ansible_distribution }}
+  become: yes
+  include: install_{{ ansible_distribution }}.yml
+
+...

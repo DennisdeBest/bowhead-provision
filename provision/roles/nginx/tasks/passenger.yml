@@ -1,0 +1,38 @@
+---
+
+- name: "Install passenger requirements"
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - apt-transport-https
+    - openssl
+    - ca-certificates
+    - build-essential
+
+- name: Add passenger repository key
+      become: yes
+      apt_key:
+        url: hkp://keyserver.ubuntu.com:80
+        id: 561F9B9CAC40B2F7
+        state: present
+
+- name: Add passenger repository
+  become: yes
+  apt_repository:
+    repo: "deb https://oss-binaries.phusionpassenger.com/apt/passenger jessie main"
+    update_cache: yes
+
+- name: Install passenger
+  apt:
+    name: passenger
+    state: latest
+    update_cache: yes
+    state: present
+  become: yes
+
+- name: Validate passenger install
+  command: passenger-config validate-install
+  register: validate
+
+...

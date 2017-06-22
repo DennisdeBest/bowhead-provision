@@ -1,0 +1,23 @@
+---
+
+- name: install requirements
+  apt:
+    state: present
+    name: "{{ item }}"
+    update_cache: yes
+  with_items:
+    - git
+    - apt-transport-https
+    - openssl
+    - ca-certificates
+
+- file:
+    path: "{{ antigen_directory }}"
+    state: directory
+
+- name: install antigen
+  get_url:
+    url: "{{ antigen_install_url }}"
+    dest: "{{ antigen_directory }}/antigen.zsh"
+
+...

@@ -1,0 +1,15 @@
+---
+
+- name: restart pve-cluster
+  become: yes
+  service:
+    name: "pve-cluster"
+    state: restarted
+
+- name: restart pve-manager
+  become: yes
+  service:
+    name: "pve-manager"
+    state: restarted
+
+...

@@ -1,0 +1,6 @@
+---
+
+- name: Install jenkins
+  include: "jenkins_install_{{ ansible_distribution  }}.yml"
+
+...

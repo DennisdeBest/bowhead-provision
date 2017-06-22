@@ -1,0 +1,15 @@
+antigen: yes
+antigen_install_url: https://cdn.rawgit.com/zsh-users/antigen/v1.4.0/bin/antigen.zsh
+antigen_directory: ~/.antigen/
+antigen_bundle:
+  - git
+  - git-flow
+  - pip
+  - gem
+  - ruby
+  - python
+  - command-not-found
+  - zsh-users/zsh-syntax-highlighting
+  - zsh-users/zsh-autosuggestions
+antigen_theme: frmendes/geometry
+change_shell: yes

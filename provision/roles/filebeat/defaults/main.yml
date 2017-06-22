@@ -1,0 +1,24 @@
+elasticsearch_output:
+  - 176.31.107.126:9200
+install: yes
+logging_level: error
+logging_to_files: true
+logging_to_syslog: false
+logging_path: /var/log/filebeat
+
+filebeat_prospectors:
+  - input_type: log
+    paths:
+      - /var/log/syslog
+      - /var/log/mail.log
+      - /var/log/auth.log
+    document_type: syslog
+    fields_under_root: true
+  - input_type: log
+    paths:
+      - /home/www/co.avril.mathador.cms/shared/app/logs/apache_*.log
+      - /home/www/co.avril.mab/logs/*.log
+      - /home/www/co.avril.joots/log/*.log
+      - /home/www/co.avril.mathador.api/log/*.log
+    document_type: apache
+    fields_under_root: true

@@ -1,0 +1,16 @@
+---
+
+- include: install_debian.yml
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Add elasticsearch configuration file
+  template:
+    src: "../templates/elasticsearch.yml.j2"
+    dest: "/etc/elasticsearch/elasticsearch.yml"
+
+- name: Restart elasticsearch
+  service:
+    name: elasticsearch
+    state: restarted
+
+...

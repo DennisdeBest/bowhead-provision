@@ -1,0 +1,12 @@
+server {
+    server_name {{ item.domain }};
+    root {{ item.root }}/web;
+
+    server_tokens {{ nginx_secret_token }};
+    {% for header in nginx_headers %}
+    add_header {{ header }};
+    {% endfor %}
+
+    error_log {{ nginx_log_dir }}{{ item.name }}.{{ nginx_error_log }};
+    access_log {{ nginx_log_dir }}{{ item.name }}.{{ nginx_access_log }};
+}

@@ -1,0 +1,9 @@
+---
+
+- include: nginx.yml
+- include: passenger.yml
+  when: nginx_passenger
+- include: vhost.yml
+  when: nginx_sites
+
+...

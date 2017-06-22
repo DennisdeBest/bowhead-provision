@@ -1,0 +1,8 @@
+---
+# This playbook contains common plays that will be run on all nodes.
+
+- name: Install default tools
+  become: yes
+  include: gitlab.yml
+
+...

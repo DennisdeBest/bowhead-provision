@@ -1,0 +1,19 @@
+server {
+    server_name {{ item.domain }};
+    # Tell Nginx and Passenger where your app's 'public' directory is
+    root {{ item.root }};
+
+    server_tokens {{ nginx_secret_token }};
+    {% for header in nginx_headers %}
+    add_header {{ header }};
+    {% endfor %}
+
+    # Turn on Passenger
+    passenger_enabled on;
+    # Tell Passenger that your app is a Node.js app
+    passenger_app_type node;
+    passenger_startup_file {{ item.index }};
+
+    error_log {{ nginx_log_dir }}{{ item.name }}.{{ nginx_error_log }};
+    access_log {{ nginx_log_dir }}{{ item.name }}.{{ nginx_access_log }};
+}

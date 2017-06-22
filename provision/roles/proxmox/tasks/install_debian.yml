@@ -1,0 +1,53 @@
+---
+
+- name: add proxmox apt repo
+  become: yes
+  apt_repository:
+    repo: deb http://download.proxmox.com/debian jessie pve-no-subscription
+    state: present
+  when: ansible_distribution == "Debian"
+
+- name: get repo key
+  become: yes
+  apt_key:
+    url: "http://download.proxmox.com/debian/key.asc"
+    state: present
+  when: ansible_distribution == "Debian"
+
+- name: apt-get update && apt-get dist-upgrade
+  become: yes
+  apt:
+    upgrade: dist
+    update_cache: yes
+  when: ansible_distribution == "Debian"
+
+- name: apt-get install proxmox-ve ssh postfix ksm-control-daemon open-iscsi systemd-sysv
+  become: yes
+  apt: 
+    name: "{{ item }}"
+    state: present 
+  with_items: 
+    - proxmox-ve
+    - ssh
+    - postfix
+    - ksm-control-daemon
+    - open-iscsi
+    - systemd-sysv
+  when: ansible_distribution == "Debian"
+
+- name: apt-get remove os-prober
+  become: yes
+  apt:
+      name: "{{ item }}"
+      state: absent 
+  with_items: 
+    - os-prober
+    - linux-image-amd64 
+    - linux-image-3.16.0-4-amd64 
+    - linux-base
+  when: ansible_distribution == "Debian"
+
+- name: update grub
+  shell: update-grub
+
+...
