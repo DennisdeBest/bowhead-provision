@@ -1,5 +1,26 @@
 ---
 
-- include: php.yml
+- name: install pear
+  become: true
+  apt: name="{{ item }}" state="present" update_cache=yes
+  with_items:
+    - php7.0-dev
+    - php-pear
 
+
+- name: Install php trader 
+  become: true
+  pear:
+    name: pecl/trader
+    state: present
+
+- name: add trader to php.ini
+  become: true
+  lineinfile:
+    path: /etc/php/7.0/apache2/php.ini
+    line: 'extension=trader.so'
+
+- name: restart apache2
+  become: true
+  shell: 'service apache2 restart'
 ...

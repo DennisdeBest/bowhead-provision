@@ -12,7 +12,7 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "wate/debian-9"
+  config.vm.box = "debian/stretch64"
   #config.vm.box_url = "https://atlas.hashicorp.com/ARTACK/boxes/debian-jessie"
 
   # Disable automatic box update checking. If you disable this, then

@@ -8,6 +8,5 @@
   with_items: 
     - redis-server
     - redis-tools
-    - php5-redis
     
 ...
